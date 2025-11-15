@@ -135,8 +135,12 @@ export class TaskCommand extends CommandMessage {
           reminded: false,
         });
 
+        const allTasks = await this.taskService.findAll();
+        const taskIndex = allTasks.findIndex(t => t.id === newTask.id);
+        const displayNumber = taskIndex + 1;
+
         response =
-          `✅ Đã thêm task #${newTask.id}: ${newTask.content}\n` +
+          `✅ Đã thêm task #${displayNumber}: ${newTask.content}\n` +
           (newTask.deadline
             ? `⏰ Deadline: ${newTask.deadline.toLocaleTimeString([], {
               hour: '2-digit',
@@ -160,8 +164,8 @@ export class TaskCommand extends CommandMessage {
         }
         response = tasks
           .map(
-            (t) =>
-              `${t.done ? '✅' : '🕒'} [${t.id}] ${t.content}` +
+            (t, index) =>
+              `${t.done ? '✅' : '🕒'} [${index + 1}] ${t.content}` + // số thứ tự từ 1
               (t.deadline
                 ? `\n   ⏰ Deadline: ${t.deadline.toLocaleTimeString([], {
                   hour: '2-digit',
@@ -180,53 +184,51 @@ export class TaskCommand extends CommandMessage {
       }
 
       case 'done': {
-        const id = parseInt(rest[0]);
-        const task = await this.taskService.findById(id);
-        if (!task) {
-          response = `❌ Không tìm thấy task #${id}.`;
+        const index = parseInt(rest[0]) - 1; // chuyển số thứ tự sang index
+        const tasks = await this.taskService.findAll();
+        if (!tasks[index]) {
+          response = `❌ Không tìm thấy task #${rest[0]}.`;
           break;
         }
-        await this.taskService.update(id, { done: true });
-        response = `✅ Đã hoàn thành task #${id}: ${task.content}`;
+        const task = tasks[index];
+        await this.taskService.update(task.id, { done: true }); // vẫn dùng id DB
+        response = `✅ Đã hoàn thành task #${rest[0]}: ${task.content}`;
         break;
       }
 
       case 'remove': {
-        const id = parseInt(rest[0]);
-        const task = await this.taskService.findById(id);
-        if (!task) {
-          response = `❌ Không tìm thấy task #${id}.`;
+        const index = parseInt(rest[0]) - 1;
+        const tasks = await this.taskService.findAll();
+        if (!tasks[index]) {
+          response = `❌ Không tìm thấy task #${rest[0]}.`;
           break;
         }
-        await this.taskService.remove(id);
-        response = `🗑️ Đã xoá task #${task.id}: ${task.content}`;
+        const task = tasks[index];
+        await this.taskService.remove(task.id);
+        response = `🗑️ Đã xoá task #${rest[0]}: ${task.content}`;
         break;
       }
 
       case 'edit': {
-        const id = parseInt(rest[0]);
-        const fullText = rest.slice(1).join(' ');
-        const newDeadline = fullText
-          .match(/\/deadline\s+([\d-:\s]+)/i)?.[1]
-          ?.trim();
-        const newRemind = fullText
-          .match(/\/remind\s+([\d-:\s]+)/i)?.[1]
-          ?.trim();
-
-        const task = await this.taskService.findById(id);
-        if (!task) {
-          response = `❌ Không tìm thấy task #${id}.`;
+        const index = parseInt(rest[0]) - 1;
+        const tasks = await this.taskService.findAll();
+        if (!tasks[index]) {
+          response = `❌ Không tìm thấy task #${rest[0]}.`;
           break;
         }
+        const task = tasks[index];
+        const fullText = rest.slice(1).join(' ');
+        const newDeadline = fullText.match(/\/deadline\s+([\d-:\s]+)/i)?.[1]?.trim();
+        const newRemind = fullText.match(/\/remind\s+([\d-:\s]+)/i)?.[1]?.trim();
 
-        const updated = await this.taskService.update(id, {
+        const updated = await this.taskService.update(task.id, {
           deadline: newDeadline ? parseTime(newDeadline) : task.deadline,
           remindAt: newRemind ? parseTime(newRemind) : task.remindAt,
           reminded: false,
         });
 
         response =
-          `✏️ Đã cập nhật task #${updated.id}\n` +
+          `✏️ Đã cập nhật task #${rest[0]}\n` +
           (updated.deadline
             ? `⏰ Deadline: ${updated.deadline.toLocaleTimeString([], {
               hour: '2-digit',
