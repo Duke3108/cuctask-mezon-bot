@@ -82,8 +82,12 @@ export class TaskCommand extends CommandMessage {
       if (!task.done && task.remindAt && !task.reminded) {
         const remindMin = Math.floor(task.remindAt.getTime() / 60_000);
         if (nowMin === remindMin && task.channelId && TaskCommand.replyFn) {
+          // Tìm số thứ tự hiển thị
+          const taskIndex = tasks.findIndex(t => t.id === task.id);
+          const displayNumber = taskIndex + 1;
+
           TaskCommand.replyFn(
-            `🔔 Nhắc nhở task #${task.id}: ${task.content}\n📅 Deadline: ${task.deadline
+            `🔔 Nhắc nhở task #${displayNumber}: ${task.content}\n📅 Deadline: ${task.deadline
               ? task.deadline.toLocaleTimeString([], {
                 hour: '2-digit',
                 minute: '2-digit',
@@ -92,6 +96,7 @@ export class TaskCommand extends CommandMessage {
             }`,
             task.channelId,
           );
+
           await this.taskService.update(task.id, { reminded: true });
         }
       }
