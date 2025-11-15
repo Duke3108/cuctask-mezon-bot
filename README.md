@@ -22,8 +22,8 @@ A modern, scalable chat bot built with NestJS and TypeScript for the Mezon chat 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/hoangduy0610/mezon-bot-template.git
-   cd mezon-bot-template
+   git clone https://github.com/Duke3108/cuctask-mezon-bot.git
+   cd cuctask-mezon-bot
    ```
 
 2. **Install dependencies**
@@ -44,6 +44,7 @@ A modern, scalable chat bot built with NestJS and TypeScript for the Mezon chat 
    POSTGRES_PASSWORD=your_password
    POSTGRES_DB=mezon_bot
    MEZON_TOKEN=your_mezon_bot_token
+   MEZON_BOT_ID=your_mezon_bot_id
    ```
 
 4. **Database Setup**
@@ -71,7 +72,8 @@ yarn start:debug
 |---------|-------------|-------|
 | `!help` | Show available commands | `!help [command]` |
 | `!ping` | Check bot latency | `!ping` |
-| `!about` | Bot information | `!about` |
+| `!about`| Bot information | `!about` |
+| `!task` | Bot main feature | `!task` |
 
 ## 🏗️ Project Structure
 
@@ -81,7 +83,8 @@ src/
 │   ├── common/       # Command abstractions
 │   ├── help.command.ts
 │   ├── ping.command.ts
-│   └── about.command.ts
+│   ├── about.command.ts
+|   └── task.command.ts
 ├── common/           # Shared constants and utilities
 ├── config/           # Configuration files
 ├── decorators/       # Custom decorators
@@ -111,32 +114,6 @@ yarn test:cov
 ## 📊 Database
 
 The bot uses PostgreSQL with TypeORM for data persistence. Key entities:
-
-
-## 🔧 Development
-
-### Adding New Commands
-
-1. Create a new command file in `src/command/`
-2. Extend `CommandMessage` class
-3. Use `@Command` decorator with metadata
-4. Register in `BotModule`
-
-Example:
-```typescript
-@Command('example', {
-    description: 'An example command',
-    usage: '!example [args]',
-    category: 'Utility',
-})
-export class ExampleCommand extends CommandMessage {
-    execute(args: string[], message: ChannelMessage) {
-        return this.replyMessageGenerate({ 
-            messageContent: 'Hello World!' 
-        }, message);
-    }
-}
-```
 
 ### Code Quality
 
@@ -170,10 +147,10 @@ yarn format
 
 ```bash
 # Build image
-docker build -t mezon-bot-template .
+docker build -t cuctask-mezon-bot .
 
 # Run container
-docker run -d --name mezon-bot-template \
+docker run -d --name cuctask-mezon-bot \
   --env-file .env.production \
   -p 3000:3000 \
   mezon-template
@@ -204,7 +181,7 @@ This project is licensed under the ISC License.
 ## 👤 Author
 
 **Nguyen Hoang Duy**
-- GitHub: [@hoangduy0610](https://github.com/hoangduy0610)
+- GitHub: [@Duke3108](https://github.com/Duke3108)
 
 ## 🙏 Acknowledgments
 

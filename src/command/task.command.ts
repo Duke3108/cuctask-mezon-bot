@@ -16,6 +16,34 @@ function parseTime(input?: string): Date | undefined {
   return isNaN(parsed.getTime()) ? undefined : parsed;
 }
 
+const text = `
+          **📘 Hướng dẫn sử dụng lệnh \`!task\`**
+
+          **1️⃣ Thêm task mới:**
+          \`!task add <nội dung> /deadline [hh:mm] /remind [hh:mm]\`
+          → Ví dụ: \`!task add Viết báo cáo /deadline 17:00 /remind 16:45\`
+
+          **2️⃣ Xem danh sách task:**
+          \`!task list\`
+
+          **3️⃣ Đánh dấu hoàn thành:**
+          \`!task done <id>\`
+          → Ví dụ: \`!task done 3\`
+
+          **4️⃣ Chỉnh sửa deadline hoặc thời gian nhắc:**
+          \`!task edit <id> /deadline [hh:mm] /remind [hh:mm]\`
+          → Ví dụ: \`!task edit 2 /deadline 09:00 /remind 08:30\`
+
+          **5️⃣ Xoá task:**
+          \`!task remove <id>\`
+          → Ví dụ: \`!task remove 5\`
+
+          ---
+
+          **💡 Gợi ý:**   
+          - Bot sẽ tự nhắc nhở khi đến giờ trong \`/remind\`.
+        `;
+
 @Command('task', {
   description: 'Quản lý task có deadline & nhắc nhở (dùng DB)',
   usage:
@@ -75,7 +103,7 @@ export class TaskCommand extends CommandMessage {
     const channelId = message.channel_id;
     if (!args.length) {
       return this.replyMessageGenerate(
-        { messageContent: '❗ Dùng: !task <add|list|edit|done|remove>' },
+        { messageContent: text },
         message,
       );
     }
@@ -216,35 +244,7 @@ export class TaskCommand extends CommandMessage {
       }
 
       default:
-        response =`
-          **📘 Hướng dẫn sử dụng lệnh \`!task\`**
-
-          **1️⃣ Thêm task mới:**
-          \`!task add <nội dung> /deadline [hh:mm|yyyy-mm-dd hh:mm] /remind [hh:mm|yyyy-mm-dd hh:mm]\`
-          → Ví dụ: \`!task add Viết báo cáo /deadline 17:00 /remind 16:45\`
-
-          **2️⃣ Xem danh sách task:**
-          \`!task list\`
-
-          **3️⃣ Đánh dấu hoàn thành:**
-          \`!task done <id>\`
-          → Ví dụ: \`!task done 3\`
-
-          **4️⃣ Chỉnh sửa deadline hoặc thời gian nhắc:**
-          \`!task edit <id> /deadline [thời gian] /remind [thời gian]\`
-          → Ví dụ: \`!task edit 2 /deadline 2025-11-13 09:00 /remind 08:30\`
-
-          **5️⃣ Xoá task:**
-          \`!task remove <id>\`
-          → Ví dụ: \`!task remove 5\`
-
-          ---
-
-          **💡 Gợi ý:**  
-          - \`/deadline\` và \`/remind\` có thể dùng định dạng \`hh:mm\` hoặc \`yyyy-mm-dd hh:mm\`.  
-          - Bot sẽ tự nhắc nhở khi đến giờ trong \`/remind\`.
-
-        `;
+        response = text;
     }
 
     const messageContent = `**📋 TASK PANEL**\n${response}`;

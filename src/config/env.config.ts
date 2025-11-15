@@ -13,8 +13,4 @@ export default () => ({
   POSTGRES_DB: process.env.POSTGRES_DB || '',
   MEZON_TOKEN: process.env.MEZON_TOKEN || '',
   MEZON_BOT_ID: process.env.MEZON_BOT_ID || '',
-  MEZON_HOST: process.env.MEZON_HOST || 'gw.mezon.ai',
-  MEZON_PORT: process.env.MEZON_PORT || '443',
-  MEZON_USE_SSL: process.env.MEZON_USE_SSL === 'true' || true,
-  MEZON_TIMEOUT: Number(process.env.MEZON_TIMEOUT) || 7000,
 });

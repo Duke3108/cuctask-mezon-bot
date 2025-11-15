@@ -19,8 +19,8 @@ export class AboutCommand extends CommandMessage {
       '',
       '**Features:**',
       '',
-      '**Author:** Nguyen Hoang Duy',
-      '**Repository:** https://github.com/hoangduy0610/mezon-bot-template',
+      '**Author:** Khuu Tien Tuoc',
+      '**Repository:** https://github.com/Duke3108/cuctask-mezon-bot.git',
     ].join('\n');
 
     return this.replyMessageGenerate(

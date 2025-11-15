@@ -10,9 +10,12 @@ import { CommandMessage } from '@app/command/common/command.abstract';
 })
 export class PingCommand extends CommandMessage {
   execute(args: string[], message: ChannelMessage) {
-    const timestamp = Date.now();
-    const messageContent = `🏓 Pong! Response time: ${timestamp - parseInt(message.create_time)}ms`;
+    const now = Date.now();
+    const msgTime = message.create_time_seconds * 1000;
 
+    const latency = now - msgTime;
+
+    const messageContent = `🏓 Pong! Response time: ${latency}ms`;
     return this.replyMessageGenerate({ messageContent }, message);
   }
 }
