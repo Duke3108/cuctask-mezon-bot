@@ -153,7 +153,7 @@ docker build -t cuctask-mezon-bot .
 docker run -d --name cuctask-mezon-bot \
   --env-file .env.production \
   -p 3000:3000 \
-  mezon-template
+  cuctask-mezon-bot
 ```
 
 ### Manual Deployment
@@ -166,21 +166,9 @@ yarn build
 NODE_ENV=production yarn start:prod
 ```
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the ISC License.
-
 ## 👤 Author
 
-**Nguyen Hoang Duy**
+**Khuu Tien Tuoc**
 - GitHub: [@Duke3108](https://github.com/Duke3108)
 
 ## 🙏 Acknowledgments

@@ -17,31 +17,30 @@ function parseTime(input?: string): Date | undefined {
 }
 
 const text = `
-          **📘 Hướng dẫn sử dụng lệnh \`!task\`**
+          📘 Guide to Using the !task Command
 
-          **1️⃣ Thêm task mới:**
-          \`!task add <nội dung> /deadline [hh:mm] /remind [hh:mm]\`
-          → Ví dụ: \`!task add Viết báo cáo /deadline 17:00 /remind 16:45\`
+          1️⃣ Add a new task:
+          !task add <content> /deadline [hh:mm] /remind [hh:mm]
+          → Example: !task add Write report /deadline 17:00 /remind 16:45
 
-          **2️⃣ Xem danh sách task:**
-          \`!task list\`
+          2️⃣ View task list:
+          !task list
 
-          **3️⃣ Đánh dấu hoàn thành:**
-          \`!task done <id>\`
-          → Ví dụ: \`!task done 3\`
+          3️⃣ Mark a task as completed:
+          !task done <id>
+          → Example: !task done 3
 
-          **4️⃣ Chỉnh sửa deadline hoặc thời gian nhắc:**
-          \`!task edit <id> /deadline [hh:mm] /remind [hh:mm]\`
-          → Ví dụ: \`!task edit 2 /deadline 09:00 /remind 08:30\`
+          4️⃣ Edit deadline or reminder time:
+          !task edit <id> /deadline [hh:mm] /remind [hh:mm]
+          → Example: !task edit 2 /deadline 09:00 /remind 08:30
 
-          **5️⃣ Xoá task:**
-          \`!task remove <id>\`
-          → Ví dụ: \`!task remove 5\`
+          5️⃣ Delete a task:
+          !task remove <id>
+          → Example: !task remove 5
 
-          ---
+          💡 Tip:
 
-          **💡 Gợi ý:**   
-          - Bot sẽ tự nhắc nhở khi đến giờ trong \`/remind\`.
+          The bot will automatically send a reminder when the time set in /remind is reached.
         `;
 
 @Command('task', {
